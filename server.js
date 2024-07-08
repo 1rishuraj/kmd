@@ -10,25 +10,7 @@ const bodyparser = require('body-parser')
 // Connecting to the MongoDB Client
 const url = process.env.MONGO_URL;
 const client = new MongoClient(url);
-async function connect() {
-    const client = new MongoClient(url, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      tls: true,
-      tlsCAFile: "<path_to_CA_certificate>" // Ensure the path to your CA certificate is correct
-    });
-  
-    try {
-      await client.connect();
-      console.log("Connected to MongoDB");
-    } catch (err) {
-      console.error("Connection error", err);
-    } finally {
-      await client.close();
-    }
-  }
-  
-  connect();
+client.connect();
 // assign database name to variable dbName
 const dbName = process.env.DB_NAME 
 const app = express()
