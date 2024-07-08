@@ -16,7 +16,7 @@ const dbName = process.env.DB_NAME
 const app = express()
 const port = process.env.PORT || 3000
 
-const allowedOrigins = ['http://localhost:5173', 'https://kmd-rho.vercel.app'];
+const allowedOrigins = ['https://kmdfrontend-krmwd12op-rishu-rajs-projects-d80232cf.vercel.app/', 'https://kmd-rho.vercel.app'];
 
 // Middleware
 app.use(bodyparser.json()) //body-parser middleware is to parse incoming request bodies in JSON, URL-encoded, or raw format, and make the parsed data available in the req.body object.
