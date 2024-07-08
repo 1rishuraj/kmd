@@ -19,7 +19,11 @@ const port = process.env.PORT || 8080
 
 // Middleware
 app.use(bodyparser.json()) //body-parser middleware is to parse incoming request bodies in JSON, URL-encoded, or raw format, and make the parsed data available in the req.body object.
-app.use(cors()) // allows only our frontend client localhost to access data from server running '/' etc endpoints. & blocks other website to access our endpoints data
+app.use(cors({
+    origin: 'https://kmd-rho.vercel.app',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+  })); // allows only our frontend client localhost to access data from server running '/' etc endpoints. & blocks other website to access our endpoints data
 
 // Get all the passwords
 app.get('/', async (req, res) => {
