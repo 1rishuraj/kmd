@@ -14,7 +14,7 @@ client.connect();
 // assign database name to variable dbName
 const dbName = process.env.DB_NAME 
 const app = express()
-const port = process.env.PORT || 8080
+const port = process.env.PORT || 3000
 
 
 // Middleware
