@@ -16,21 +16,27 @@ const dbName = process.env.DB_NAME
 const app = express()
 const port = process.env.PORT || 3000
 
-const allowedOrigins = ['https://kmdfrontend-krmwd12op-rishu-rajs-projects-d80232cf.vercel.app/', 'https://kmd-rho.vercel.app'];
-
+const allowedOrigins = [
+    'http://localhost:5173', 
+    'https://kmd-rho.vercel.app',
+    'https://kmdfrontend-hfnbkqk6h-rishu-rajs-projects-d80232cf.vercel.app',
+    // Add more allowed origins as necessary
+];
 // Middleware
 app.use(bodyparser.json()) //body-parser middleware is to parse incoming request bodies in JSON, URL-encoded, or raw format, and make the parsed data available in the req.body object.
 app.use(cors({
     origin: function (origin, callback) {
-        if (allowedOrigins.includes(origin) || !origin) {
-            callback(null, true);
+        // Allow requests with no origin (like mobile apps, curl requests)
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.includes(origin)) {
+            return callback(null, true);
         } else {
-            callback(new Error('Not allowed by CORS'));
+            return callback(new Error('Not allowed by CORS'));
         }
     },
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true
+    credentials: true // Allow credentials
 }));// allows only our frontend client localhost to access data from server running '/' etc endpoints. & blocks other website to access our endpoints data
 
 // Get all the passwords
