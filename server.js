@@ -16,14 +16,22 @@ const dbName = process.env.DB_NAME
 const app = express()
 const port = process.env.PORT || 3000
 
+const allowedOrigins = ['http://localhost:5173', 'https://kmd-rho.vercel.app'];
 
 // Middleware
 app.use(bodyparser.json()) //body-parser middleware is to parse incoming request bodies in JSON, URL-encoded, or raw format, and make the parsed data available in the req.body object.
 app.use(cors({
-    origin: 'https://kmd-rho.vercel.app/',
+    origin: function (origin, callback) {
+        if (allowedOrigins.includes(origin) || !origin) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization']
-  })); // allows only our frontend client localhost to access data from server running '/' etc endpoints. & blocks other website to access our endpoints data
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
+}));// allows only our frontend client localhost to access data from server running '/' etc endpoints. & blocks other website to access our endpoints data
 
 // Get all the passwords
 app.get('/', async (req, res) => {
